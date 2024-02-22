@@ -21,8 +21,8 @@ class Planet(ShowBase):
         #planets
         self.planet1 = self.loader.loadModel("./Assets/Planets/protoPlanet.x")
         self.planet1.reparentTo(self.render)
-        self.planet1.setPos(150, 5000, 67)
-        self.planet1.setScale(350)
+        self.planet1.setPos(0, 0, 0)
+        self.planet1.setScale(100)
         tex = self.loader.loadTexture("./Assets/Planets/Planet 1.jpg")
         self.planet1.setTexture(tex, 1)
 
