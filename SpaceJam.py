@@ -2,7 +2,8 @@ from direct.showbase.ShowBase import ShowBase
 import SpaceJamClasses as spaceJamClasses
 import DefensePaths as defensePaths
 from panda3d.core import *
-import math,random  
+import math,random
+
 
 
 class SpaceJam(ShowBase):
@@ -80,6 +81,12 @@ class SpaceJam(ShowBase):
  #       drone_model = self.loader.loadModel("Assets/DroneDefender/DroneDefender.obj")
   #      drone_model.reparentTo(placeholder)
    #     drone_model.setScale(3)
+            
+
+    def SetCamera(self):
+        self.disableMouse
+        self.camera.reparentTo(self.Hero.modelNode)
+        self.camera.setFluidPos(0, 1, 0)
 
 
 
