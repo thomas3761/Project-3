@@ -78,106 +78,106 @@ class Spaceship:# / player
         tex = loader.loadTexture("./Assets/Khan/Khan.jpg")
         self.spaceship.setTexture(tex, 1)
 
-        def Thrust(self, keyDown):
-            if keyDown:
-                self.taskManager.add(self.ApplyThrust, 'Forward-thrust')
-            else: self.taskManager.remove('Forward-thrust')
+    def Thrust(self, keyDown):
+        if keyDown:
+            self.taskManager.add(self.ApplyThrust, 'Forward-thrust')
+        else: self.taskManager.remove('Forward-thrust')
 
-        def ApplyThrust(self,task):
-            rate = 3
-            trajectoy =self.render.getRelativeVector(self.modelNode,Vec3.forward())
-            trajectoy.normalize()
-            self.modelNode.setFluidPos(self.modelNode.getPos() + trajectoy * rate)
-            return Task.cont
+    def ApplyThrust(self,task):
+        rate = 3
+        trajectoy =self.render.getRelativeVector(self.modelNode,Vec3.forward())
+        trajectoy.normalize()
+        self.modelNode.setFluidPos(self.modelNode.getPos() + trajectoy * rate)
+        return Task.cont
         
-        def LeftTurn(self, keyDown):
-            if keyDown:
-                self.taskManager.add(self.ApplyLeftTurn, 'LeftTurn')
-            else: self.taskManager.remove('LeftTurn')
+    def LeftTurn(self, keyDown):
+        if keyDown:
+            self.taskManager.add(self.ApplyLeftTurn, 'LeftTurn')
+        else: self.taskManager.remove('LeftTurn')
 
-        def ApplyLeftTurn(self,task):
-            # half a degree every Frame
-            rate = .5
-            self.modelNode.setH(self.modelNode.gegetHtPos() +  rate)
-            return Task.cont
+    def ApplyLeftTurn(self,task):
+        # half a degree every Frame
+        rate = .5
+        self.modelNode.setH(self.modelNode.gegetHtPos() +  rate)
+        return Task.cont
         
-        def RightTurn(self, keyDown):
-            if keyDown:
-                self.taskManager.add(self.ApplyRightTurn, 'RightTurn')
-            else:self.taskManager.remove('RightTurn')
+    def RightTurn(self, keyDown):
+        if keyDown:
+            self.taskManager.add(self.ApplyRightTurn, 'RightTurn')
+        else:self.taskManager.remove('RightTurn')
 
-        def ApplyRightTurn(self, task):
-            # half a degree every Frame
-            rate = -0.5  
-            self.modelNode.setH(self.modelNode.getH() + rate)  
-            return Task.cont
+    def ApplyRightTurn(self, task):
+        # half a degree every Frame
+        rate = -0.5  
+        self.modelNode.setH(self.modelNode.getH() + rate)  
+        return Task.cont
         
-        def MoveUp(self, keyDown):
-            if keyDown:
-                self.taskManager.add(self.ApplyMoveUp, 'MoveUp')
-            else: self.taskManager.remove('MoveUp')
+    def MoveUp(self, keyDown):
+        if keyDown:
+            self.taskManager.add(self.ApplyMoveUp, 'MoveUp')
+        else: self.taskManager.remove('MoveUp')
 
-        def ApplyMoveUp(self, task):
-            # half a degree every Frame
-            rate = 0.5  
-            self.modelNode.setZ(self.modelNode.getZ() + rate)  
-            return Task.cont
+    def ApplyMoveUp(self, task):
+        # half a degree every Frame
+        rate = 0.5  
+        self.modelNode.setZ(self.modelNode.getZ() + rate)  
+        return Task.cont
         
-        def MoveDown(self, keyDown):
-            if keyDown:
-                self.taskManager.add(self.ApplyMoveDown, 'MoveDown')
-            else: self.taskManager.remove('MoveDown')
+    def MoveDown(self, keyDown):
+        if keyDown:
+            self.taskManager.add(self.ApplyMoveDown, 'MoveDown')
+        else: self.taskManager.remove('MoveDown')
 
-        def ApplyMoveDown(self, task):
-            # half a degree every Frame
-            rate = -0.5  
-            self.modelNode.setZ(self.modelNode.getZ() + rate) 
-            return Task.cont
+    def ApplyMoveDown(self, task):
+        # half a degree every Frame
+        rate = -0.5  
+        self.modelNode.setZ(self.modelNode.getZ() + rate) 
+        return Task.cont
         
-        def RotateLeft(self, keyDown):
-            if keyDown:
-                self.taskManager.add(self.ApplyRotateLeft, 'RotateLeft')
-            else: self.taskManager.remove('RotateLeft')
+    def RotateLeft(self, keyDown):
+        if keyDown:
+            self.taskManager.add(self.ApplyRotateLeft, 'RotateLeft')
+        else: self.taskManager.remove('RotateLeft')
 
-        def ApplyRotateLeft(self, task):
-            # half a degree every Frame
-            rate = 0.5  
-            self.modelNode.setP(self.modelNode.getP() + rate)  
-            return Task.cont
+    def ApplyRotateLeft(self, task):
+        # half a degree every Frame
+        rate = 0.5  
+        self.modelNode.setP(self.modelNode.getP() + rate)  
+        return Task.cont
 
-        def RotateRight(self, keyDown):
-            if keyDown:
-                self.taskManager.add(self.ApplyRotateRight, 'RotateRight')
-            else:self.taskManager.remove('RotateRight')
+    def RotateRight(self, keyDown):
+        if keyDown:
+            self.taskManager.add(self.ApplyRotateRight, 'RotateRight')
+        else:self.taskManager.remove('RotateRight')
 
-        def ApplyRotateRight(self, task):
-            # half a degree every Frame
-            rate = -0.5  
-            self.modelNode.setP(self.modelNode.getP() + rate) 
-            return Task.cont
+    def ApplyRotateRight(self, task):
+        # half a degree every Frame
+        rate = -0.5  
+        self.modelNode.setP(self.modelNode.getP() + rate) 
+        return Task.cont
 
-        def setKeyBindings(self):  #all key Bindings for Spaceship move
-            # s
-            self.accept('space', self.Thrust, [1])
-            self.accept('space-up', self.Thrust [0])
+    def setKeyBindings(self):  #all key Bindings for Spaceship move
+        # s
+        self.accept('space', self.Thrust, [1])
+        self.accept('space-up', self.Thrust [0])
 
-            #  keys for  left and right
-            self.accept('arrow_left', self.LeftTurn, [1])
-            self.accept('arrow_left-up', self.LeftTurn, [0])
-            self.accept('arrow_right', self.RightTurn, [1])
-            self.accept('arrow_right-up', self.RightTurn, [0])
+        #  keys for  left and right
+        self.accept('arrow_left', self.LeftTurn, [1])
+        self.accept('arrow_left-up', self.LeftTurn, [0])
+        self.accept('arrow_right', self.RightTurn, [1])
+        self.accept('arrow_right-up', self.RightTurn, [0])
 
-            #  keys for  up and down
-            self.accept('arrow_up', self.MoveUp, [1])
-            self.accept('arrow_up-up', self.MoveUp, [0])
-            self.accept('arrow_down', self.MoveDown, [1])
-            self.accept('arrow_down-up', self.MoveDown, [0])
+        #  keys for  up and down
+        self.accept('arrow_up', self.MoveUp, [1])
+        self.accept('arrow_up-up', self.MoveUp, [0])
+        self.accept('arrow_down', self.MoveDown, [1])
+        self.accept('arrow_down-up', self.MoveDown, [0])
 
-            #  keys for rotating left and right
-            self.accept('a', self.RotateLeft, [1])
-            self.accept('a-up', self.RotateLeft, [0])
-            self.accept('d', self.RotateRight, [1])
-            self.accept('d-up', self.RotateRight, [0])
+        #  keys for rotating left and right
+        self.accept('a', self.RotateLeft, [1])
+        self.accept('a-up', self.RotateLeft, [0])
+        self.accept('d', self.RotateRight, [1])
+        self.accept('d-up', self.RotateRight, [0])
       
     class SpaceStation:
         def __init__(self, loader, render):
