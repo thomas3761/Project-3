@@ -21,8 +21,8 @@ class Planet(ShowBase):
         #planets
         self.planet1 = self.loader.loadModel("./Assets/Planets/protoPlanet.x")
         self.planet1.reparentTo(self.render)
-        self.planet1.setPos(0, 0, 0)
-        self.planet1.setScale(100)
+        self.planet1.setPos(150, 5000, 67)
+        self.planet1.setScale(350)
         tex = self.loader.loadTexture("./Assets/Planets/Planet 1.jpg")
         self.planet1.setTexture(tex, 1)
 
@@ -70,12 +70,26 @@ class Universe:
         self.universe.setTexture(tex, 1)
 
 class Spaceship:# / player
-    def __init__(self, loader, render):
-        self.spaceship = loader.loadModel("./Assets/Khan/Khan.x")
-        self.spaceship.reparentTo(render)
-        self.spaceship.setPos(-1000, 5000, 80)
+    def __init__(self, loader: Loader, render: NodePath, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
+        self.spaceship = loader.loadModel(modelPath)
+        self.spaceship.reparentTo(parentNode)
+        self.spaceship.setPos(posVec)
+        self.spaceship.setScale(scaleVec)
+
+        self.loader = loader
+        self.render = render
+
+        self.spaceship.setName(nodeName)
+        tex = loader.loadTexture(texPath)
+        self.spaceship.setTexture(tex, 1)
+
+        self.modelNode = self.spaceship
+
+        self.spaceship = self.loader.loadModel(".\Assets\Khan\Khan.x")
+        self.spaceship.reparentTo(self.render)
+        self.spaceship.setPos(0, 0, 0) 
         self.spaceship.setScale(10)
-        tex = loader.loadTexture("./Assets/Khan/Khan.jpg")
+        tex = self.loader.loadTexture(".\Assets\Khan\Khan.jpg")
         self.spaceship.setTexture(tex, 1)
 
     def Thrust(self, keyDown):
@@ -179,14 +193,14 @@ class Spaceship:# / player
         self.accept('d', self.RotateRight, [1])
         self.accept('d-up', self.RotateRight, [0])
       
-    class SpaceStation:
-        def __init__(self, loader, render):
-            self.station = loader.loadModel("./Assets/SpaceStation1B/spaceStation.x")
-            self.station.reparentTo(render)
-            self.station.setPos(1000, 5000, 80)
-            self.station.setScale(50)
-            tex = loader.loadTexture("./Assets/SpaceStation1B/SpaceStation1_Dif2.png")
-            self.station.setTexture(tex, 1)
+class SpaceStation:
+    def __init__(self, loader, render):
+        self.station = loader.loadModel("./Assets/SpaceStation1B/spaceStation.x")
+        self.station.reparentTo(render)
+        self.station.setPos(1000, 5000, 80)
+        self.station.setScale(50)
+        tex = loader.loadTexture("./Assets/SpaceStation1B/SpaceStation1_Dif2.png")
+        self.station.setTexture(tex, 1)
 
 
 class DroneShowBase():

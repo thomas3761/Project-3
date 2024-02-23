@@ -10,6 +10,7 @@ class SpaceJam(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
         self.setScene()
+        self.SetCamera()
 
         self.planet1 = spaceJamClasses.Planet(self.loader, self.render, "./Assets/Planets/protoPlanet.x", self.render, "Planet1", "./Assets/Planets/Planet 1.jpg", Vec3(150, 5000, 67), 350)
         self.planet2 = spaceJamClasses.Planet(self.loader, self.render, "./Assets/Planets/protoPlanet.x", self.render, "Planet2", "./Assets/Planets/Planet 2.jpg", Vec3(7314, 1274, 976), 350)
@@ -18,10 +19,11 @@ class SpaceJam(ShowBase):
         self.planet5 = spaceJamClasses.Planet(self.loader, self.render, "./Assets/Planets/protoPlanet.x", self.render, "Planet5", "./Assets/Planets/Planet 5.jpg", Vec3(1382, 1274, 4567), 350)
         self.planet6 = spaceJamClasses.Planet(self.loader, self.render, "./Assets/Planets/protoPlanet.x", self.render, "Planet6", "./Assets/Planets/Planet 6.png", Vec3(4502, 1274, 6478), 350)
 
+        self.spaceship = spaceJamClasses.Spaceship(self.loader, self.render, "./Assets/Khan/Khan.x", self.render, "Spaceship", "./Assets/Khan/Khan.jpg", Vec3(0, 0, 0), 10)
 
         self.universe = spaceJamClasses.Universe(self.loader, self.render)
-        self.spaceship = spaceJamClasses.Spaceship(self.loader, self.render)
         self.space_station = spaceJamClasses.SpaceStation(self.loader, self.render)
+
         #self.DrawBaseballSeams(self.planet1, 10, 36)
         
         
@@ -85,7 +87,7 @@ class SpaceJam(ShowBase):
 
     def SetCamera(self):
         self.disableMouse
-        self.camera.reparentTo(self.Hero.modelNode)
+        self.camera.reparentTo(self.spaceship.modelNode)
         self.camera.setFluidPos(0, 1, 0)
 
 
