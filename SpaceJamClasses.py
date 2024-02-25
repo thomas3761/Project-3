@@ -83,7 +83,6 @@ class Spaceship:# / player
         tex = loader.loadTexture(texPath)
         self.spaceship.setTexture(tex, 1)
 
-        self.modelNode = self.spaceship
 
         self.spaceship = self.loader.loadModel(".\Assets\Khan\Khan.x")
         self.spaceship.reparentTo(self.render)
