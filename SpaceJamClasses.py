@@ -62,7 +62,20 @@ class Planet(ShowBase):
         self.planet6.setTexture(tex, 1)
 
 class Universe:
-    def __init__(self, loader, render):
+    def __init__(self, loader, render, modelPath: str, texPath: str, posVec: Vec3, scaleVec: float):
+
+        self.universe = loader.loadModel(modelPath)
+        self.universe.reparentTo(render)
+        self.universe.setPos(posVec)
+        self.universe.setScale(scaleVec)
+        self.universe.setName("Universe")
+
+        self.loader = loader
+        self.render = render
+
+        tex = loader.loadTexture(texPath)
+        self.universe.setTexture(tex, 1)
+
         self.universe = loader.loadModel("./Assets/Universe/Universe.x")
         self.universe.reparentTo(render)
         self.universe.setScale(15000)
@@ -90,6 +103,8 @@ class Spaceship:# / player
         self.spaceship.setScale(10)
         tex = self.loader.loadTexture(".\Assets\Khan\Khan.jpg")
         self.spaceship.setTexture(tex, 1)
+
+        
 
     def Thrust(self, keyDown):
         if keyDown:
@@ -172,7 +187,7 @@ class Spaceship:# / player
     def setKeyBindings(self):  #all key Bindings for Spaceship move
         # s
         self.accept('space', self.Thrust, [1])
-        self.accept('space-up', self.Thrust [0])
+        self.accept('space-up', self.Thrust, [0])
 
         #  keys for  left and right
         self.accept('arrow_left', self.LeftTurn, [1])
@@ -193,7 +208,20 @@ class Spaceship:# / player
         self.accept('d-up', self.RotateRight, [0])
       
 class SpaceStation:
-    def __init__(self, loader, render):
+    def __init__(self, loader, render, modelPath: str, texPath: str, posVec: Vec3, scaleVec: float):
+
+        self.station = loader.loadModel(modelPath)
+        self.station.reparentTo(render)
+        self.station.setPos(posVec)
+        self.station.setScale(scaleVec)
+        self.station.setName("SpaceStation")
+
+        self.loader = loader
+        self.render = render
+
+        tex = loader.loadTexture(texPath)
+        self.station.setTexture(tex, 1)
+        
         self.station = loader.loadModel("./Assets/SpaceStation1B/spaceStation.x")
         self.station.reparentTo(render)
         self.station.setPos(1000, 5000, 80)

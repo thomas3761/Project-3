@@ -10,7 +10,7 @@ class SpaceJam(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
         self.setScene()
-        self.SetCamera()
+        #self.SetCamera()
 
         self.planet1 = spaceJamClasses.Planet(self.loader, self.render, "./Assets/Planets/protoPlanet.x", self.render, "Planet1", "./Assets/Planets/Planet 1.jpg", Vec3(150, 5000, 67), 350)
         self.planet2 = spaceJamClasses.Planet(self.loader, self.render, "./Assets/Planets/protoPlanet.x", self.render, "Planet2", "./Assets/Planets/Planet 2.jpg", Vec3(7314, 1274, 976), 350)
@@ -21,8 +21,14 @@ class SpaceJam(ShowBase):
 
         self.spaceship = spaceJamClasses.Spaceship(self.loader, self.render, "./Assets/Khan/Khan.x", self.render, "Spaceship", "./Assets/Khan/Khan.jpg", Vec3(0, 0, 0), 10)
 
-        self.universe = spaceJamClasses.Universe(self.loader, self.render)
-        self.space_station = spaceJamClasses.SpaceStation(self.loader, self.render)
+        self.universe = spaceJamClasses.Universe(self.loader, self.render, "./Assets/Universe/Universe.x", "./Assets/Universe/space-galaxy.jpg", Vec3(0, 0, 0), 15000)
+        self.spaceStation = spaceJamClasses.SpaceStation(self.loader, self.render, "./Assets/SpaceStation1B/spaceStation.x", "./Assets/SpaceStation1B/SpaceStation1_Dif2.png", Vec3(1000, 5000, 80), 50)
+
+        fullCycle = 60
+        for j in range(fullCycle):
+            spaceJamClasses.DroneShowBase.droneCount += 1
+            nickName = "Drone" + str(spaceJamClasses.DroneShowBase.droneCount)
+            self.DrawCloudDefense(self.planet1, nickName)
 
         #self.DrawBaseballSeams(self.planet1, 10, 36)
         
@@ -85,10 +91,10 @@ class SpaceJam(ShowBase):
    #     drone_model.setScale(3)
             
 
-    def SetCamera(self):
-        self.disableMouse
-        self.camera.reparentTo(self.spaceship.modelNode)
-        self.camera.setFluidPos(0, 1, 0)
+    #def SetCamera(self):
+    #    self.disableMouse()
+    #    self.camera.reparentTo(self.spaceship.modelNode)
+    #    self.camera.setFluidPos(0, 1, 0)
 
 
 
