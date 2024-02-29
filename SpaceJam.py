@@ -11,6 +11,7 @@ class SpaceJam(ShowBase):
         ShowBase.__init__(self)
         self.setScene()
         #self.SetCamera()
+        
 
         self.planet1 = spaceJamClasses.Planet(self.loader, self.render, "./Assets/Planets/protoPlanet.x", self.render, "Planet1", "./Assets/Planets/Planet 1.jpg", Vec3(150, 5000, 67), 350)
         self.planet2 = spaceJamClasses.Planet(self.loader, self.render, "./Assets/Planets/protoPlanet.x", self.render, "Planet2", "./Assets/Planets/Planet 2.jpg", Vec3(7314, 1274, 976), 350)
@@ -19,7 +20,7 @@ class SpaceJam(ShowBase):
         self.planet5 = spaceJamClasses.Planet(self.loader, self.render, "./Assets/Planets/protoPlanet.x", self.render, "Planet5", "./Assets/Planets/Planet 5.jpg", Vec3(1382, 1274, 4567), 350)
         self.planet6 = spaceJamClasses.Planet(self.loader, self.render, "./Assets/Planets/protoPlanet.x", self.render, "Planet6", "./Assets/Planets/Planet 6.png", Vec3(4502, 1274, 6478), 350)
 
-        self.spaceship = spaceJamClasses.Spaceship(self.loader, self.render, "./Assets/Khan/Khan.x", self.render, "Spaceship", "./Assets/Khan/Khan.jpg", Vec3(0, 0, 0), 10)
+        self.modelNode = spaceJamClasses.Spaceship(self.loader, self.render, "./Assets/Khan/Khan.x", self.render, "Spaceship", "./Assets/Khan/Khan.jpg", Vec3(400, 0, 0), 10, self.taskMgr, self.accept)
 
         self.universe = spaceJamClasses.Universe(self.loader, self.render, "./Assets/Universe/Universe.x", "./Assets/Universe/space-galaxy.jpg", Vec3(0, 0, 0), 15000)
         self.spaceStation = spaceJamClasses.SpaceStation(self.loader, self.render, "./Assets/SpaceStation1B/spaceStation.x", "./Assets/SpaceStation1B/SpaceStation1_Dif2.png", Vec3(1000, 5000, 80), 50)

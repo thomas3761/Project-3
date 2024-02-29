@@ -1,7 +1,8 @@
 from panda3d.core import *
 from direct.showbase.ShowBase import ShowBase
 from direct.task import Task
-
+from direct.task.Task import TaskManager
+from typing import Callable 
 class Planet(ShowBase):
 
     def __init__(self, loader: Loader, render: NodePath, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
@@ -83,59 +84,65 @@ class Universe:
         self.universe.setTexture(tex, 1)
 
 class Spaceship:# / player
-    def __init__(self, loader: Loader, render: NodePath, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        self.spaceship = loader.loadModel(modelPath)
-        self.spaceship.reparentTo(parentNode)
-        self.spaceship.setPos(posVec)
-        self.spaceship.setScale(scaleVec)
+    def __init__(self, loader: Loader, render: NodePath, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float, taskManager: TaskManager, accept: Callable[[str, Callable], None]):
+        self.modelNode = loader.loadModel(modelPath)
+        self.modelNode.reparentTo(parentNode)
+        self.modelNode.setPos(posVec)
+        self.modelNode.setScale(scaleVec)
 
+        self.taskManager = taskManager
         self.loader = loader
         self.render = render
+        self.accept = accept
 
-        self.spaceship.setName(nodeName)
+        self.modelNode.setName(nodeName)
         tex = loader.loadTexture(texPath)
-        self.spaceship.setTexture(tex, 1)
+        self.modelNode.setTexture(tex, 1)
+        self.modelNode.setP(100)
 
 
-        self.spaceship = self.loader.loadModel(".\Assets\Khan\Khan.x")
-        self.spaceship.reparentTo(self.render)
-        self.spaceship.setPos(0, 0, 0) 
-        self.spaceship.setScale(10)
-        tex = self.loader.loadTexture(".\Assets\Khan\Khan.jpg")
-        self.spaceship.setTexture(tex, 1)
+        self.setKeyBindings()
 
+       # self.spaceship = self.loader.loadModel(".\Assets\Khan\Khan.x")
+        self.modelNode.reparentTo(self.render)
+        self.modelNode.setPos(0, 0, 0) 
+        self.modelNode.setScale(10)
+        #tex = self.loader.loadTexture(".\Assets\Khan\Khan.jpg")
+        self.modelNode.setTexture(tex, 1)
         
-
     def Thrust(self, keyDown):
         if keyDown:
             self.taskManager.add(self.ApplyThrust, 'Forward-thrust')
-        else: self.taskManager.remove('Forward-thrust')
+        else: 
+            self.taskManager.remove('Forward-thrust')
 
-    def ApplyThrust(self,task):
+    def ApplyThrust(self, task):
         rate = 3
-        trajectoy =self.render.getRelativeVector(self.modelNode,Vec3.forward())
-        trajectoy.normalize()
-        self.modelNode.setFluidPos(self.modelNode.getPos() + trajectoy * rate)
+        trajectory = self.render.getRelativeVector(self.modelNode, Vec3.forward())
+        trajectory.normalize()
+        self.modelNode.setFluidPos(self.modelNode.getPos() + trajectory * rate)
         return Task.cont
         
     def LeftTurn(self, keyDown):
         if keyDown:
             self.taskManager.add(self.ApplyLeftTurn, 'LeftTurn')
-        else: self.taskManager.remove('LeftTurn')
+        else: 
+            self.taskManager.remove('LeftTurn')
 
-    def ApplyLeftTurn(self,task):
-        # half a degree every Frame
-        rate = .5
-        self.modelNode.setH(self.modelNode.gegetHtPos() +  rate)
+    def ApplyLeftTurn(self, task):
+        # Half a degree every frame
+        rate = 0.5
+        self.modelNode.setH(self.modelNode.getH() + rate)
         return Task.cont
         
     def RightTurn(self, keyDown):
         if keyDown:
             self.taskManager.add(self.ApplyRightTurn, 'RightTurn')
-        else:self.taskManager.remove('RightTurn')
+        else:
+            self.taskManager.remove('RightTurn')
 
     def ApplyRightTurn(self, task):
-        # half a degree every Frame
+        # Half a degree every frame
         rate = -0.5  
         self.modelNode.setH(self.modelNode.getH() + rate)  
         return Task.cont
@@ -143,10 +150,11 @@ class Spaceship:# / player
     def MoveUp(self, keyDown):
         if keyDown:
             self.taskManager.add(self.ApplyMoveUp, 'MoveUp')
-        else: self.taskManager.remove('MoveUp')
+        else: 
+            self.taskManager.remove('MoveUp')
 
     def ApplyMoveUp(self, task):
-        # half a degree every Frame
+        # Half a degree every frame
         rate = 0.5  
         self.modelNode.setZ(self.modelNode.getZ() + rate)  
         return Task.cont
@@ -154,10 +162,11 @@ class Spaceship:# / player
     def MoveDown(self, keyDown):
         if keyDown:
             self.taskManager.add(self.ApplyMoveDown, 'MoveDown')
-        else: self.taskManager.remove('MoveDown')
+        else: 
+            self.taskManager.remove('MoveDown')
 
     def ApplyMoveDown(self, task):
-        # half a degree every Frame
+        # Half a degree every frame
         rate = -0.5  
         self.modelNode.setZ(self.modelNode.getZ() + rate) 
         return Task.cont
@@ -165,10 +174,11 @@ class Spaceship:# / player
     def RotateLeft(self, keyDown):
         if keyDown:
             self.taskManager.add(self.ApplyRotateLeft, 'RotateLeft')
-        else: self.taskManager.remove('RotateLeft')
+        else: 
+            self.taskManager.remove('RotateLeft')
 
     def ApplyRotateLeft(self, task):
-        # half a degree every Frame
+        # Half a degree every frame
         rate = 0.5  
         self.modelNode.setP(self.modelNode.getP() + rate)  
         return Task.cont
@@ -176,32 +186,33 @@ class Spaceship:# / player
     def RotateRight(self, keyDown):
         if keyDown:
             self.taskManager.add(self.ApplyRotateRight, 'RotateRight')
-        else:self.taskManager.remove('RotateRight')
+        else:
+            self.taskManager.remove('RotateRight')
 
     def ApplyRotateRight(self, task):
-        # half a degree every Frame
+        # Half a degree every frame
         rate = -0.5  
         self.modelNode.setP(self.modelNode.getP() + rate) 
         return Task.cont
 
-    def setKeyBindings(self):  #all key Bindings for Spaceship move
-        # s
+    def setKeyBindings(self):  
+        # All key Bindings for Spaceship move
         self.accept('space', self.Thrust, [1])
         self.accept('space-up', self.Thrust, [0])
 
-        #  keys for  left and right
+        # Keys for left and right
         self.accept('arrow_left', self.LeftTurn, [1])
         self.accept('arrow_left-up', self.LeftTurn, [0])
         self.accept('arrow_right', self.RightTurn, [1])
         self.accept('arrow_right-up', self.RightTurn, [0])
 
-        #  keys for  up and down
+        # Keys for up and down
         self.accept('arrow_up', self.MoveUp, [1])
         self.accept('arrow_up-up', self.MoveUp, [0])
         self.accept('arrow_down', self.MoveDown, [1])
         self.accept('arrow_down-up', self.MoveDown, [0])
 
-        #  keys for rotating left and right
+        # Keys for rotating left and right
         self.accept('a', self.RotateLeft, [1])
         self.accept('a-up', self.RotateLeft, [0])
         self.accept('d', self.RotateRight, [1])
